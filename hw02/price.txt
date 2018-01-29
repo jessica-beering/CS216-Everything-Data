@@ -1,0 +1,15 @@
+It appears that Price votes so infrequently with Pelosi because Pelosi votes in general more often than Price and Butterfield. The difference in how often each individual representative votes attributes to the error in vote correspondence. 
+
+SQL code 
+
+WITH votes_compare(vote_id, vote1) AS
+(SELECT v1.vote_id, v1.vote
+ FROM votes v, persons p1, person_votes v1
+ WHERE v.chamber = 'h' AND (v.session = 2015 or v.session = 2016)
+   AND p1.last_name = 'Price'
+   AND v1.person_id = p1.id  
+   AND v.id = v1.vote_id)
+SELECT COUNT(*) AS agree,
+       (SELECT COUNT(*) FROM votes_compare) AS total,
+       COUNT(*)*100.00 / (SELECT COUNT(*) FROM votes_compare) AS percent
+FROM votes_compare
