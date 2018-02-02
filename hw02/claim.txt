@@ -1,0 +1,15 @@
+a) The average age of US Representatives in Hawaii is 82.3. 
+
+b) SQL Query 
+
+CREATE VIEW HI_members AS
+SELECT p.id, p.first_name, p.last_name, (date_part('year', current_date) - date_part('year', p.birthday)) AS age,
+	r.type, r.state
+FROM persons p, person_roles r
+WHERE p.id = r.person_id AND r.type = 'rep' AND r.state = 'HI';
+
+SELECT state, COUNT(*), AVG(age)
+FROM HI_members 
+GROUP BY state;
+
+c) There are only 2 representatives in Hawaii so this is not worth an average. 
