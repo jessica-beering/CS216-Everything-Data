@@ -1,0 +1,10 @@
+true positives: 55
+  (to show true positives: SELECT * FROM TP_rows;)
+false positives: 3
+  (to show false positives: SELECT * FROM FP_rows;)
+false negatives: 6
+  (to show false negatives: SELECT * FROM FN_rows;)
+-----
+precision: 0.94827586206896551724
+recall: 0.90163934426229508197
+f1: 0.92436974789915966386635548336981851564155
