@@ -1,0 +1,36 @@
+Critique for Team 27: By Jess Beering
+
+Summary: This project utilizes a dataset of various wine bottles paired with rating scores and features of the wine such as price and place of production. 
+Open Refine was used to perform data cleaning to remove syntactical errors and incomplete entries. One goal of this project was to predict whether a 
+user would rate a novel wine as high or low based on predictive models and the user’s previous rankings of other wines. Another goal was to predict 
+the wine feature preferences of users. A k-means algorithm and clustering was used as a predictive model ultimately choosing the cluster with the 
+highest average rating of wines for an individual user. In order to create the clusters, a 10-90 split was used and six clusters was determined as the 
+optimal number of clusters.
+
+Strengths
+
+* I thought the execution of data cleaning was valuable and done well. They clearly spent time looking for syntactical errors and removing entries 
+that would have skewed the data.
+
+* I thought their explanation and consideration of the limitations and error sources were important to evaluate their results. 
+For example, they mentioned the subjectivity of ratings as a key factor in error.
+
+* I thought their reasoning for using a 10-90 split demonstrated their thoughtful consideration of the data overall as they wanted to minimize 
+error by using more splits and different assignments.
+
+Weaknesses
+
+* I liked how the project focused in on three specific features because this is easier to follow and more concise, but I think including 
+justifications for using these three features would have been a good addition. Specifically, I was confused what exactly the feature
+ “rating description” was and the role this plays.
+
+* I think it would have been interesting and could have added another layer of complexity if they had added an additional feature 
+from a different data set. In the presentation, they mentioned how one of the related works they looked at analyzed chemical attributes, 
+so I was thinking something similar to this. They also mentioned the relationship between food and wine, so maybe including some feature
+ related to food and a user’s preference.
+
+* The measurement of a “good wine” was 80-90 for mediocre and 90-100 for outstanding. I think including a justification for this 
+range division would have been beneficial. I am not sure if they just divided evenly, but if they did then I would recommend using 
+percentiles or a median rating value as the bounds for the ranges instead.
+
+* Lastly, I think using another predictive model in addition to k means clustering would have been beneficial to see how other models compare
