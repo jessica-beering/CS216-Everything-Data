@@ -1,0 +1,137 @@
+---
+title: "cs216-proj"
+author: "rdn5"
+date: "4/29/2018"
+output: html_document
+---
+
+```{r}
+onpr <- data.frame(onpr)
+summary(onpr)
+str(onpr)
+```
+
+```{r}
+quantile(onpr$shares)
+```
+
+
+
+```{r}
+onpr.lm <- lm(shares ~ 
+                num_imgs + 
+                num_videos +
+                lifestyle+
+                entertainment+
+                business+
+                social_media+
+                tech+
+                world+
+                ari,
+              data = onpr)
+test.lm <- lm(log(shares) ~ ari, data=onpr)
+summary(test.lm)
+#plot(log(onpr$shares) ~ onpr$ari)
+```
+
+
+#adding month column
+```{r}
+onpr$month_yr <- format(as.Date(onpr$pub_date), "%Y-%m")
+month_yr_df <- data.frame(date = onpr$pub_date,
+                          shares = onpr$shares,
+                          year = as.numeric(format(onpr$pub_date, format = "%Y")),
+                          month = as.Date(cut(onpr$pub_date, breaks = "month")),
+                          day = as.numeric(format(onpr$pub_date, format = "%d")))
+summary(month_yr_df)
+```
+#aggregate mean by month and plot
+```{r}
+x = aggregate(shares ~ month + year, month_yr_df, mean)
+plot(shares ~ month, 
+     x, 
+     xaxt = "n",
+     type = "b",
+     col=ifels
+     xlab = "",
+     ylab="Number of Shares",
+     main = "Average Shares per Month (2013-2014)")
+axis(1, x$month, format(x$month, "%b %y"), cex.axis = .7)
+```
+
+#aggregate by day of week and plot
+```{r}
+y = aggregate(shares ~ day, onpr, mean)
+z <- y[order(y$shares),]
+barplot(z$shares,
+        col=rainbow(20),
+        ylim=c(0,4000),
+        names.arg=z$day,
+        ylab="Number of Shares",
+        main="Average Number of Shares per Weekday (2013-2014)")
+```
+
+
+
+
+
+#create new data frame
+```{r}
+test_df <- data.frame(shares = log(onpr$shares),
+                      num_imgs = onpr$num_imgs,
+                      num_videos = onpr$num_videos,
+                      monday = onpr$monday,
+                      tuesday = onpr$tuesday,
+                      wednesday = onpr$wednesday,
+                      thursday = onpr$thursday,
+                      friday = onpr$friday,
+                      weekend = onpr$weekend,
+                      content_trending = onpr$content_trending,
+                      title_trending = onpr$title_trending,
+                      ari = onpr$ari)
+cor_test_df <- cor(test_df)
+library(corrplot)
+corrplot(cor_test_df, method = "circle")
+```
+
+```{r}
+lm1 <- lm(shares ~ content_trending, data=onpr)
+plot(log(onpr$shares) ~ onpr$content_trending)
+lm2 <- lm(shares ~ title_trending, data=onpr)
+```
+
+```{r}
+plot(log(onpr$shares) ~ onpr$title_trending,
+     xlab="Number of Trending Words in Article Topic",
+     ylab="log(number of shares)",
+     main="Trending Words vs. Shares")
+```
+
+```{r}
+#plot(log(onpr$shares) ~ onpr$ari)
+lm3 <- lm(shares ~ ari, data=onpr)
+plot(onpr$shares ~ onpr$ari,
+     xlim=c(12,25),
+     ylim=c(0,150000),
+     type="h",
+     xlab="Automated Readability Index",
+     ylab="Aggregate Shares",
+     main="Automated Readability Index vs. Shares")
+```
+```{r}
+plot(log(onpr$shares) ~ onpr$content_trending,
+     xlim=c(0,50),
+     xlab="Number of Trending Words in Article Content",
+     ylab="log(number of shares)",
+     main="Trending Words vs. Shares")
+```
+
+
+
+
+
+
+
+
+
+
